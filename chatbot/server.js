@@ -45,12 +45,74 @@ How to behave:
 - If you don't know something, say so and point them to call the office.`;
 
 const app = express();
+app.set('trust proxy', 1); // honor X-Forwarded-For behind a host's proxy (for correct client IPs)
 app.use(express.json({ limit: '32kb' }));
+
+// ── CORS allow-list for the chat API ──
+// Set ALLOWED_ORIGINS to a comma-separated list of the sites permitted to call
+// /api/chat, e.g. "https://friscosmilesdentistry.com,https://www.friscosmilesdentistry.com".
+// Leave it unset for local development (same-origin needs no CORS; cross-origin is then open).
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '')
+  .split(',').map(s => s.trim()).filter(Boolean);
+if (!ALLOWED_ORIGINS.length) {
+  console.warn('[warn] ALLOWED_ORIGINS not set — cross-origin requests to /api/chat are unrestricted. Set it before going public.');
+}
+
+function applyCors(req, res) {
+  const origin = req.headers.origin;
+  if (!origin) return true; // same-origin / curl — no CORS headers needed
+  const allowed = ALLOWED_ORIGINS.length === 0 || ALLOWED_ORIGINS.includes(origin);
+  if (allowed) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Max-Age', '86400');
+  }
+  return allowed;
+}
+
+// ── Simple in-memory rate limiter (per IP) ──
+// Bounds abuse without an external dependency. For multi-instance hosting,
+// swap this for a shared store (Redis) — see README.
+const RATE_LIMIT = Number(process.env.RATE_LIMIT || 15);   // requests
+const RATE_WINDOW_MS = Number(process.env.RATE_WINDOW_MS || 60_000); // per window
+const hits = new Map(); // ip -> { count, resetAt }
+
+function rateLimited(req, res) {
+  const ip = req.ip || 'unknown';
+  const now = Date.now();
+  let rec = hits.get(ip);
+  if (!rec || now > rec.resetAt) { rec = { count: 0, resetAt: now + RATE_WINDOW_MS }; hits.set(ip, rec); }
+  rec.count += 1;
+  const remaining = Math.max(0, RATE_LIMIT - rec.count);
+  res.setHeader('X-RateLimit-Limit', String(RATE_LIMIT));
+  res.setHeader('X-RateLimit-Remaining', String(remaining));
+  if (rec.count > RATE_LIMIT) {
+    res.setHeader('Retry-After', String(Math.ceil((rec.resetAt - now) / 1000)));
+    return true;
+  }
+  return false;
+}
+
+// Opportunistically evict stale buckets so the Map can't grow unbounded.
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, rec] of hits) if (now > rec.resetAt) hits.delete(ip);
+}, RATE_WINDOW_MS).unref?.();
+
+// Preflight for the chat endpoint.
+app.options('/api/chat', (req, res) => {
+  const ok = applyCors(req, res);
+  res.status(ok ? 204 : 403).end();
+});
 
 // Serve the static site (project root is one level up from /chatbot).
 app.use(express.static(path.join(__dirname, '..')));
 
 app.post('/api/chat', async (req, res) => {
+  if (!applyCors(req, res)) return res.status(403).json({ error: 'origin_not_allowed' });
+  if (rateLimited(req, res)) return res.status(429).json({ error: 'rate_limited' });
   try {
     const incoming = Array.isArray(req.body && req.body.messages) ? req.body.messages : [];
     // Keep only well-formed turns, cap history to the last 20 to bound token use.

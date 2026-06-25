@@ -85,8 +85,12 @@ than `/api/chat`, update `CHAT_API_URL` in `../script.js`.)
   key immediately if it ever leaks.
 - The key lives only on the server; the browser only ever talks to your `/api/chat`.
 - History is capped to the last 20 turns and 2000 chars/message to bound token cost.
-- Consider adding rate limiting / an allowed-origin (CORS) check before going public,
-  so the endpoint isn't used as a free Claude proxy.
+- **Rate limiting & CORS are built in.** `/api/chat` is limited to 15 requests per
+  IP per minute (tune via `RATE_LIMIT` / `RATE_WINDOW_MS`). Set `ALLOWED_ORIGINS`
+  to your site's domain(s) before going public so the endpoint can't be used as a
+  free Claude proxy from other origins (unset = open, for local dev only).
+  The in-memory limiter is per-instance — for multi-instance/serverless hosting,
+  back it with a shared store (Redis) or your platform's built-in rate limiting.
 
 ## Customizing the bot
 
