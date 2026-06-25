@@ -53,3 +53,20 @@ if (ba) {
   window.addEventListener('pointermove', e => { if (dragging) setPct(e.clientX); });
   window.addEventListener('pointerup', () => dragging = false);
 }
+
+// testimonials carousel
+const track = document.getElementById('tTrack');
+if (track) {
+  const slides = track.children.length;
+  let i = 0;
+  const dots = document.querySelectorAll('.t-dot');
+  const go = n => {
+    i = (n + slides) % slides;
+    track.style.transform = `translateX(-${i*100}%)`;
+    dots.forEach((d,di) => d.classList.toggle('active', di===i));
+  };
+  document.getElementById('tPrev')?.addEventListener('click', () => go(i-1));
+  document.getElementById('tNext')?.addEventListener('click', () => go(i+1));
+  dots.forEach((d,di) => d.addEventListener('click', () => go(di)));
+  go(0);
+}
