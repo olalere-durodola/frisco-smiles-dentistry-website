@@ -213,3 +213,65 @@ body{font-family:var(--font-body);color:var(--ink);background:var(--bg);line-hei
 .faq-item.open .faq-a{max-height:300px}
 
 .faq-a p{color:var(--muted);line-height:1.6;padding-bottom:20px;max-width:640px}
+
+/* ── Visit / Contact ── */
+.visit{padding:clamp(56px,8vw,90px) 0}
+
+.visit-heading{font-family:var(--font-head);font-weight:600;font-size:clamp(26px,4vw,38px);color:var(--deep);margin-bottom:24px}
+
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+
+.visit-block{margin-bottom:22px}
+
+.visit-label{font-family:var(--font-head);font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--teal);font-weight:600;margin-bottom:6px}
+
+.visit-address{font-style:normal;color:var(--deep);line-height:1.6}
+
+.visit-phones{color:var(--deep);line-height:1.6}
+
+.visit-phones a{color:var(--deep);font-weight:600;text-decoration:none;transition:color .15s}
+
+.visit-phones a:hover{color:var(--teal)}
+
+.visit-hours{color:var(--deep);line-height:1.6}
+
+.visit-closed{color:var(--muted-2)}
+
+.visit-media{display:flex;flex-direction:column}
+
+.visit-photo{width:100%;border-radius:var(--radius-lg);box-shadow:var(--shadow);object-fit:cover;aspect-ratio:4/3;display:block}
+
+.map-placeholder{margin-top:14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-2);min-height:140px;display:flex;align-items:center;justify-content:center;padding:16px;color:var(--muted-2);font-size:13px;text-align:center;line-height:1.5}
+
+@media(max-width:760px){
+  .visit-grid{grid-template-columns:1fr}
+}
+
+/* ── Footer ── */
+.site-footer{background:var(--deep);color:var(--soft);padding:48px 0 28px}
+
+.footer-inner{display:flex;flex-wrap:wrap;gap:32px 48px;align-items:flex-start;justify-content:space-between}
+
+.footer-brand-link{color:var(--soft)}
+
+.footer-brand-link .brand-mark{background:var(--teal)}
+
+.footer-brand-link .brand-text strong{color:var(--soft)}
+
+.footer-brand-link .brand-text small{color:rgba(207,228,230,.55)}
+
+.footer-nav{display:flex;flex-direction:column;gap:10px}
+
+.footer-nav a{text-decoration:none;color:rgba(207,228,230,.7);font-size:14px;font-weight:500;transition:color .15s}
+
+.footer-nav a:hover{color:#fff}
+
+.footer-social{display:flex;flex-direction:column;gap:10px}
+
+.footer-social-link{text-decoration:none;color:rgba(207,228,230,.7);font-size:14px;font-weight:500;transition:color .15s}
+
+.footer-social-link:hover{color:#fff}
+
+.footer-divider{border:none;border-top:1px solid rgba(207,228,230,.12);margin:32px 0 18px}
+
+.footer-copy{color:rgba(207,228,230,.45);font-size:12.5px}
