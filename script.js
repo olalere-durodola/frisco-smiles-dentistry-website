@@ -133,8 +133,17 @@ if (modal) {
 
   const goTo = s => { state.step = Math.max(0, Math.min(4, s)); render(); };
 
+  const reset = () => {
+    state.step = 0;
+    state.reason = state.day = state.time = state.name = state.phone = '';
+    card.querySelectorAll('.bk-choice.selected').forEach(c => c.classList.remove('selected'));
+    if (nameInput) nameInput.value = '';
+    if (phoneInput) phoneInput.value = '';
+  };
+
   const open = el => {
     trigger = el || document.activeElement;
+    reset();
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
     render();
@@ -178,9 +187,13 @@ if (modal) {
   });
   backBtn.addEventListener('click', () => goTo(state.step - 1));
 
-  // Escape closes + simple focus trap
+  // Escape closes (document-level so it works regardless of focus)
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !modal.hidden) close();
+  });
+
+  // simple focus trap within the modal card
   modal.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { close(); return; }
     if (e.key !== 'Tab') return;
     const focusable = [...card.querySelectorAll('button, input, [href], [tabindex]:not([tabindex="-1"])')]
       .filter(el => !el.disabled && el.offsetParent !== null);
