@@ -311,6 +311,83 @@
     </div>
   </footer>
 
+  <!-- ── Booking modal (5-step, visual-only) ── -->
+  <div class="modal" id="booking" hidden>
+    <div class="modal-backdrop" data-close-booking></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Book an appointment" data-step="0">
+      <button class="modal-close" data-close-booking aria-label="Close">&times;</button>
+      <h2 class="bk-title">Request an appointment</h2>
+      <div class="bk-dots" aria-hidden="true">
+        <span class="bk-dot active"></span>
+        <span class="bk-dot"></span>
+        <span class="bk-dot"></span>
+        <span class="bk-dot"></span>
+        <span class="bk-dot"></span>
+      </div>
+
+      <!-- Step 0 — Reason -->
+      <div class="bk-step" data-panel="0">
+        <h3 class="bk-h">What brings you in?</h3>
+        <p class="bk-sub">Choose the reason for your visit.</p>
+        <div class="bk-stack">
+          <button class="bk-choice" data-value="New patient exam &amp; cleaning">New patient exam &amp; cleaning</button>
+          <button class="bk-choice" data-value="Cleaning &amp; checkup">Cleaning &amp; checkup</button>
+          <button class="bk-choice" data-value="Cosmetic consult">Cosmetic consult</button>
+          <button class="bk-choice" data-value="Tooth pain / emergency">Tooth pain / emergency</button>
+          <button class="bk-choice" data-value="Something else">Something else</button>
+        </div>
+      </div>
+
+      <!-- Step 1 — Day -->
+      <div class="bk-step" data-panel="1">
+        <h3 class="bk-h">Pick a day</h3>
+        <div class="bk-wrap">
+          <button class="bk-choice" data-value="Monday">Monday</button>
+          <button class="bk-choice" data-value="Tuesday">Tuesday</button>
+          <button class="bk-choice" data-value="Wednesday">Wednesday</button>
+          <button class="bk-choice" data-value="Thursday">Thursday</button>
+          <button class="bk-choice" data-value="Friday">Friday</button>
+        </div>
+      </div>
+
+      <!-- Step 2 — Time -->
+      <div class="bk-step" data-panel="2">
+        <h3 class="bk-h">Choose a time</h3>
+        <div class="bk-wrap">
+          <button class="bk-choice" data-value="8:00 AM">8:00 AM</button>
+          <button class="bk-choice" data-value="9:30 AM">9:30 AM</button>
+          <button class="bk-choice" data-value="11:00 AM">11:00 AM</button>
+          <button class="bk-choice" data-value="1:30 PM">1:30 PM</button>
+          <button class="bk-choice" data-value="3:00 PM">3:00 PM</button>
+        </div>
+      </div>
+
+      <!-- Step 3 — Details -->
+      <div class="bk-step" data-panel="3">
+        <h3 class="bk-h">Your details</h3>
+        <label class="bk-label" for="bkName">Full name</label>
+        <input class="bk-input" id="bkName" type="text" placeholder="Full name">
+        <label class="bk-label" for="bkPhone">Phone number</label>
+        <input class="bk-input" id="bkPhone" type="tel" placeholder="Phone number">
+      </div>
+
+      <!-- Step 4 — Confirmation -->
+      <div class="bk-step" data-panel="4">
+        <h3 class="bk-h">Request received!</h3>
+        <p class="bk-sub">Thanks — your appointment request is in.</p>
+        <div class="bk-summary" id="bkSummary"></div>
+        <p class="bk-note">We'll call you shortly to confirm.</p>
+        <button class="btn btn-primary" data-close-booking>Done</button>
+      </div>
+
+      <!-- Footer controls -->
+      <div class="bk-controls">
+        <button class="btn bk-back" id="bkBack">Back</button>
+        <button class="btn btn-primary" id="bkNext">Next</button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
