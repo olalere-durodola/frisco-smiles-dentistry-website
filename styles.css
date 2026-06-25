@@ -100,3 +100,24 @@ body{font-family:var(--font-body);color:var(--ink);background:var(--bg);line-hei
 .svc h3{font-family:var(--font-head);font-size:17px;font-weight:600;color:var(--deep);margin-bottom:6px}
 
 .svc p{color:var(--muted);font-size:14.5px;line-height:1.55}
+
+/* ── Smiles before/after ── */
+.smiles{padding:clamp(56px,8vw,90px) 0;background:var(--bg-2)}
+
+.smiles-heading{font-family:var(--font-head);font-weight:600;font-size:clamp(28px,4vw,40px);color:var(--deep);text-align:center;letter-spacing:-.01em}
+
+.smiles-sub{text-align:center;color:var(--muted-2);font-size:14px;margin-top:8px}
+
+.ba{position:relative;overflow:hidden;border-radius:var(--radius-lg);box-shadow:var(--shadow);max-width:720px;margin:28px auto 0;user-select:none;cursor:ew-resize;aspect-ratio:3/2}
+
+.ba-after{display:block;width:100%;height:100%;object-fit:cover}
+
+.ba-before{position:absolute;inset:0;overflow:hidden}
+
+.ba-before-inner{position:absolute;top:0;left:0;height:100%}
+
+.ba-before-inner img{display:block;height:100%;width:auto;max-width:none}
+
+.ba-handle{position:absolute;top:0;bottom:0;width:3px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 1px var(--line)}
+
+.ba-handle::after{content:'⟷';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:#fff;border:2px solid var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--teal);line-height:1;box-shadow:var(--shadow)}

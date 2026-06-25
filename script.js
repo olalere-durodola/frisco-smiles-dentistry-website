@@ -33,3 +33,23 @@ filters.forEach(btn => btn.addEventListener('click', () => {
   const cat = btn.dataset.filter;
   svcs.forEach(s => { s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none'; });
 }));
+
+// before/after slider
+const ba = document.getElementById('ba');
+if (ba) {
+  const before = document.getElementById('baBefore');
+  const handle = document.getElementById('baHandle');
+  const inner = ba.querySelector('.ba-before-inner');
+  const sizeInner = () => { if (inner) inner.style.width = ba.clientWidth + 'px'; };
+  sizeInner();
+  window.addEventListener('resize', sizeInner);
+  let dragging = false;
+  const setPct = clientX => {
+    const r = ba.getBoundingClientRect();
+    const pct = Math.min(100, Math.max(0, (clientX - r.left) / r.width * 100));
+    before.style.width = pct + '%'; handle.style.left = pct + '%';
+  };
+  ba.addEventListener('pointerdown', e => { dragging = true; ba.setPointerCapture?.(e.pointerId); setPct(e.clientX); });
+  window.addEventListener('pointermove', e => { if (dragging) setPct(e.clientX); });
+  window.addEventListener('pointerup', () => dragging = false);
+}
