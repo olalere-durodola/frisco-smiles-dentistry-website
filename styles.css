@@ -13,3 +13,30 @@ html{scroll-behavior:smooth}
 body{font-family:var(--font-body);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
 
 .container{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+/* ── Scroll progress bar ── */
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--teal);width:0;z-index:100;transition:width .1s linear}
+
+/* ── Sticky nav ── */
+.nav{position:sticky;top:0;z-index:90;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(245,249,249,.85);border-bottom:1px solid var(--line)}
+
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+
+/* Brand */
+.brand{display:flex;flex-direction:row;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand-mark{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;background:var(--teal);color:#fff;font-family:var(--font-head);font-weight:700;font-size:18px;flex-shrink:0}
+.brand-text strong{display:block;font-family:var(--font-head);font-size:17px;font-weight:700;color:var(--deep);line-height:1.2}
+.brand-text small{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-2);line-height:1.4}
+
+/* Nav links */
+.nav-links{display:flex;flex-direction:row;gap:26px;list-style:none}
+.nav-links a{text-decoration:none;font-size:14px;font-weight:500;color:var(--muted);transition:color .15s}
+.nav-links a:hover{color:var(--deep)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:var(--radius);font-weight:600;cursor:pointer;border:none;text-decoration:none;font-family:var(--font-body);font-size:14px;transition:opacity .15s,background .15s}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:var(--teal-deep)}
+
+/* Hamburger toggle — hidden on desktop, shown on mobile in a later task */
+.nav-toggle{display:none;background:transparent;border:none;cursor:pointer;font-size:22px;color:var(--deep);padding:4px 8px;line-height:1}
