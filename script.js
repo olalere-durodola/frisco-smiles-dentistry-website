@@ -203,3 +203,87 @@ if (modal) {
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 }
+
+// ── AI chat widget ──
+// Point this at your deployed backend (see chatbot/README.md). Same-origin default:
+const CHAT_API_URL = '/api/chat';
+(() => {
+  const fab = document.getElementById('chatFab');
+  const panel = document.getElementById('chatPanel');
+  if (!fab || !panel) return;
+  const log = document.getElementById('chatLog');
+  const form = document.getElementById('chatForm');
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('chatSend');
+  const closeBtn = document.getElementById('chatClose');
+
+  // Conversation history sent to the model ({role, content}); excludes the greeting.
+  const history = [];
+
+  const openPanel = () => {
+    panel.hidden = false;
+    fab.setAttribute('aria-expanded', 'true');
+    input.focus();
+  };
+  const closePanel = () => {
+    panel.hidden = true;
+    fab.setAttribute('aria-expanded', 'false');
+  };
+  fab.addEventListener('click', () => (panel.hidden ? openPanel() : closePanel()));
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) closePanel(); });
+
+  // Render a message bubble. Escapes text; linkifies tel: numbers minimally.
+  const addBubble = (role, text) => {
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + (role === 'user' ? 'chat-user' : 'chat-bot');
+    text.split(/\n{2,}/).forEach(para => {
+      const p = document.createElement('p');
+      p.textContent = para;
+      div.appendChild(p);
+    });
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+    return div;
+  };
+
+  let busy = false;
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text || busy) return;
+    busy = true;
+    sendBtn.disabled = true;
+    input.value = '';
+
+    addBubble('user', text);
+    history.push({ role: 'user', content: text });
+
+    const typing = document.createElement('div');
+    typing.className = 'chat-typing';
+    typing.textContent = 'Typing…';
+    log.appendChild(typing);
+    log.scrollTop = log.scrollHeight;
+
+    try {
+      const res = await fetch(CHAT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history }),
+      });
+      typing.remove();
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const reply = (data && data.reply) ? data.reply : "Sorry, I didn't catch that.";
+      addBubble('bot', reply);
+      history.push({ role: 'assistant', content: reply });
+    } catch (err) {
+      typing.remove();
+      addBubble('bot', "Sorry — I'm having trouble right now. Please call us at (469) 212-9064 and we'll be glad to help.");
+    } finally {
+      busy = false;
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  });
+})();
