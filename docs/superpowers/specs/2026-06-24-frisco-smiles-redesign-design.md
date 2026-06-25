@@ -25,6 +25,7 @@ Plain static site — no framework, no build step:
 - `styles.css` — design system + section styles.
 - `script.js` — vanilla JS for all interactivity.
 - Google Fonts (Space Grotesk + Inter) via `<link>`.
+- Real photography via Unsplash (hosted URLs) for hero, office, smiles, and portrait.
 - Original bundle kept as `index.original.html` for reference.
 
 Rejected alternatives: restyling inside the existing bundle (fragile, opaque);
@@ -62,11 +63,11 @@ All content below is the real copy extracted from the current bundle.
    - *Cosmetic:* Invisalign®, Teeth Whitening, Porcelain Veneers, Cosmetic Bonding,
      Smile Makeovers.
 5. **Before/After (Smiles).** Heading "See the smile you've been waiting for."
-   Draggable comparison slider (placeholder images).
+   Draggable comparison slider (real Unsplash smile photos).
 6. **Doctor.** "Dr. Thanh K. Hong, DMD". Bio: "Dr. Hong leads Frisco Smiles with a steady
    hand and a genuine warmth that puts even the most anxious patients at ease. His philosophy
    is simple: listen first, explain clearly, and treat every smile the way he'd treat his own
-   family's." Portrait placeholder.
+   family's." Real headshot photo (Unsplash, swappable).
 7. **Experience.** Heading "Why patients keep coming back." Four cards:
    Unhurried visits, Digital & precise, Truly gentle, One trusted roof.
 8. **Testimonials.** Carousel of three: Maya R. (Patient since 2021), Daniel K.
@@ -75,7 +76,8 @@ All content below is the real copy extracted from the current bundle.
    dental emergency; treating children; Invisalign cost/financing; office hours Mon–Fri 8–5).
 10. **Visit/Contact.** "Come see us in Frisco." Address: 2955 Eldorado Pkwy, Suite 110,
     Frisco, TX 75033. Phones: New (469) 212-9064 / Existing (469) 294-4239.
-    Hours: Mon–Fri 8:00am–5:00pm, closed weekends. Map placeholder. "Call us" CTA.
+    Hours: Mon–Fri 8:00am–5:00pm, closed weekends. Office photo + map placeholder.
+   "Call us" CTA.
 11. **Footer.** Brand, nav links, social, copyright.
 12. **Booking modal.** Five steps — (0) reason, (1) day, (2) time, (3) details
     (name/phone), (4) confirmation "Request received!". Visual-only state machine;
@@ -100,10 +102,24 @@ Each behavior is a small, independent module attached on `DOMContentLoaded`:
 - Modal traps focus and closes on Escape / backdrop click.
 - Responsive breakpoints for mobile (single column, hidden desktop nav → menu).
 
+## Images (in scope)
+
+Real photography sourced from Unsplash (hosted CDN URLs, no local files):
+
+- **Hero** — warm, modern dental-office or smiling-patient image.
+- **Before/After** — two real smile/portrait photos for the comparison slider (representative
+  stock; client can swap with actual patient photos later).
+- **Doctor portrait** — professional headshot (representative stock; swap with Dr. Hong's
+  actual photo later).
+- **Visit** — exterior/interior office or Frisco-area image alongside the map placeholder.
+
+Images use `loading="lazy"` and descriptive `alt` text. Representative stock stands in for
+photos the practice will replace with their own.
+
 ## Out of Scope
 
-Real booking/contact backend; real photography (placeholders/SVG used); analytics;
-multi-page routing; CMS.
+Real booking/contact backend (booking modal is visual-only); analytics; multi-page routing;
+CMS.
 
 ## Testing
 
