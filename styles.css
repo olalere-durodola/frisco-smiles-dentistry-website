@@ -192,3 +192,24 @@ body{font-family:var(--font-body);color:var(--ink);background:var(--bg);line-hei
 .t-dot{width:9px;height:9px;border-radius:50%;border:none;background:var(--line);cursor:pointer;padding:0;transition:background .2s}
 
 .t-dot.active{background:var(--teal)}
+
+/* ── FAQ accordion ── */
+.faq{padding:clamp(56px,8vw,90px) 0}
+
+.faq-heading{font-family:var(--font-head);font-weight:600;font-size:clamp(26px,4vw,38px);color:var(--deep);margin-bottom:24px}
+
+.faq-list{max-width:760px}
+
+.faq-item{border-bottom:1px solid var(--line)}
+
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:none;cursor:pointer;text-align:left;padding:20px 0;font-family:var(--font-head);font-size:17px;font-weight:600;color:var(--deep)}
+
+.faq-ico{color:var(--teal);font-size:22px;line-height:1;flex-shrink:0;transition:transform .25s}
+
+.faq-item.open .faq-ico{transform:rotate(45deg)}
+
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+
+.faq-item.open .faq-a{max-height:300px}
+
+.faq-a p{color:var(--muted);line-height:1.6;padding-bottom:20px;max-width:640px}

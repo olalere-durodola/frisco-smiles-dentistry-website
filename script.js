@@ -70,3 +70,11 @@ if (track) {
   dots.forEach((d,di) => d.addEventListener('click', () => go(di)));
   go(0);
 }
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(q => q.addEventListener('click', () => {
+  const item = q.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(o => { o.classList.remove('open'); o.querySelector('.faq-q').setAttribute('aria-expanded','false'); });
+  if (!isOpen) { item.classList.add('open'); q.setAttribute('aria-expanded','true'); }
+}));
