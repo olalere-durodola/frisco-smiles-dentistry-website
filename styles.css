@@ -1,0 +1,15 @@
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#F5F9F9; --bg-2:#EAF3F3; --mist:#E6F0F1; --soft:#CFE4E6;
+  --teal:#0E7C86; --teal-deep:#0B5d65; --deep:#0F2E36;
+  --ink:#1B3A40; --muted:#4A5E62; --muted-2:#6A7C80; --line:rgba(15,46,54,.08);
+  --radius:14px; --radius-lg:18px; --shadow:0 12px 40px rgba(15,46,54,.10);
+  --maxw:1200px; --font-head:'Space Grotesk',sans-serif; --font-body:'Inter',sans-serif;
+}
+
+html{scroll-behavior:smooth}
+
+body{font-family:var(--font-body);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+.container{max-width:var(--maxw);margin:0 auto;padding:0 28px}
