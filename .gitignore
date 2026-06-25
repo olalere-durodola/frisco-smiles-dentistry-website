@@ -1,1 +1,7 @@
 .superpowers/
+
+# Secrets & dependencies — never commit these
+.env
+**/.env
+node_modules/
+**/node_modules/
